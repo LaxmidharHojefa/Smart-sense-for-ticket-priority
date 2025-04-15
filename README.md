@@ -62,11 +62,9 @@ Optionally, create a virtual environment before installing dependencies.
 ### 3. Ensure These Files Exist
 Make sure the following trained model files are present in the root directory:
 
-model.pkl
-
-vectorizer.pkl
-
-label_encoder.pkl
+- model.pkl
+- vectorizer.pkl
+- label_encoder.pkl
 
 These files should be created during your model training phase and stored using the pickle module.
 
@@ -86,28 +84,21 @@ http://127.0.0.1:5000/
 ### 5. Use the Web Interface
 Open the URL in your browser. Enter a ticket subject and description to get an instant priority prediction.
 
-✅ Example
-Input:
+#### ✅ Example
+#### Input:
+**Subject**: Website is down
+**Body**: Our application server has been unresponsive since this morning.
 
-Subject: Website is down
+#### Output:
+**Predicted Priority**: High
 
-Body: Our application server has been unresponsive since this morning.
-
-Output:
-
-Predicted Priority: High
-
-📌 Future Enhancements
+### 📌 Future Enhancements
 Add support for multi-language inputs
 
-Integrate deep learning models for better accuracy
-
-Implement user login and dashboard system
-
-Store incoming tickets and predictions in a database
-
-Add logging and analytics for ticket trends
+- Integrate deep learning models for better accuracy
+- Implement user login and dashboard system
+- Store incoming tickets and predictions in a database
+- Add logging and analytics for ticket trends
 
 ### 📝 License
-This project is licensed under the MIT License. You are free to use, modify, and distribute it with attribution.
 This project is licensed under the MIT License. You are free to use, modify, and distribute it with attribution.
