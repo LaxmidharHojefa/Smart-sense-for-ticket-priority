@@ -25,9 +25,21 @@
 
 ## 🗂️ Project Structure
 
-ticket-priority-predictor/ ├── app.py # Flask backend application ├── model.pkl # Trained machine learning model ├── vectorizer.pkl # TF-IDF vectorizer used for text transformation ├── label_encoder.pkl # Label encoder for priority classes │ ├── templates/ │ └── index.html # Frontend HTML interface │ ├── static/ │ └── style.css # Optional CSS styling file │ └── README.md # Project documentation (you are here)
-
----
+```text
+ticket-priority-predictor/
+├── app.py               # Flask backend application
+├── model.pkl            # Trained machine learning model
+├── vectorizer.pkl       # TF-IDF vectorizer used for text transformation
+├── label_encoder.pkl    # Label encoder for priority classes
+│
+├── templates/
+│   └── index.html       # Frontend HTML interface
+│
+├── static/
+│   └── style.css        # Optional CSS styling file
+│
+└── README.md            # Project documentation (you are here)
+```
 
 ## ⚙️ How It Works
 
