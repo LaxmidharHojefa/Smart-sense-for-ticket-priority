@@ -4,80 +4,67 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ticket Priority Predictor</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 40px;
-      background-color: #f4f4f4;
-    }
-
-    .container {
-      max-width: 600px;
-      margin: auto;
-      padding: 30px;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 0 10px #ccc;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 12px;
-      margin: 10px 0;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1rem;
-    }
-
-    button {
-      padding: 10px 20px;
-      font-size: 1rem;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #0056b3;
-    }
-
-    .result {
-      margin-top: 20px;
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
   <div class="container">
-    <h2>Ticket Priority Predictor</h2>
-    <input type="text" id="subject" placeholder="Enter subject" />
-    <textarea id="body" rows="6" placeholder="Enter body"></textarea>
-    <button onclick="predictPriority()">Predict Priority</button>
-    <div class="result" id="result"></div>
+    <div class="card">
+      <h1><span class="icon">🔍</span> Ticket Priority Predictor</h1>
+
+      <label for="subject">Subject</label>
+      <input type="text" id="subject" placeholder="Enter subject here" />
+
+      <label for="body">Body</label>
+      <textarea id="body" placeholder="Enter issue description here..."></textarea>
+
+      <button onclick="predictPriority()">Predict Priority</button>
+
+      <div class="result" id="resultBox"></div>
+
+      <h3>🔎 Prediction History</h3>
+      <div class="history-box" id="history"></div>
+    </div>
   </div>
 
   <script>
-    async function predictPriority() {
-      const subjectValue = document.getElementById("subject").value;
-      const bodyValue = document.getElementById("body").value;
+    let history = [];
 
-      const response = await fetch("http://127.0.0.1:5000/predict", {
+    function updateHistoryDisplay() {
+      const container = document.getElementById("history");
+      container.innerHTML = "";
+      history.forEach(item => {
+        const el = document.createElement("div");
+        el.className = "history-item";
+        el.innerHTML = `📌 <b>${item.subject}</b> → <span style="color:cyan;">${item.priority}</span> (${item.sentiment} sentiment)`;
+        container.appendChild(el);
+      });
+    }
+
+    async function predictPriority() {
+      const subject = document.getElementById("subject").value;
+      const body = document.getElementById("body").value;
+
+      const response = await fetch("/predict", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          subject: subjectValue,
-          body: bodyValue,
-        }),
+        body: JSON.stringify({ subject, body }),
       });
 
-      const data = await response.json();
-      document.getElementById("result").textContent = "Predicted Priority: " + data.priority;
+      const result = await response.json();
+      document.getElementById("resultBox").innerText = `Predicted Priority: ${result.priority} | Sentiment: ${result.sentiment}`;
+
+      history.unshift({
+        subject,
+        priority: result.priority,
+        sentiment: result.sentiment
+      });
+
+      updateHistoryDisplay();
     }
   </script>
 </body>
 </html>
+
